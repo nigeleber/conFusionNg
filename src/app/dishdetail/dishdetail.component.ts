@@ -8,7 +8,6 @@ import { DishService } from '../services/dish.service';
 
 import 'rxjs/add/operator/switchMap';
 
-// Assignment 3 Imports
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 
@@ -21,14 +20,14 @@ import { Comment } from '../shared/comment';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishcopy = null;
   dishIds: number[];
   prev: number;
   next: number;
 
   commentForm: FormGroup;
   comment: Comment;
-  commentDate: Date;
-
+  
   errMess: String;
 
   formErrors = {
@@ -63,9 +62,9 @@ export class DishdetailComponent implements OnInit {
 
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
-      .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-        errmess => this.errMess = <any>errmess);
+      .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+          errmess => { this.dish = null; this.errMess = <any>errmess; });
   }
 
   setPrevNext(dishId: number) {
@@ -77,8 +76,6 @@ export class DishdetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
-  // Assignment 3 Methods
 
   createForm() {
     this.commentForm = this.fb.group({
@@ -112,10 +109,11 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.comment = this.commentForm.value;
-    this.commentDate = new Date(); // get current date at time of submission
-    this.comment.date = this.commentDate.toISOString(); // convert date to ISO format and assign to comment
-    this.dish.comments.push(this.comment); // add the new comment to the list of comments
+    this.comment.date = new Date().toISOString();
     console.log(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishcopy.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
     this.commentForm.reset({
       rating: 5,
       comment: '',
