@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
+import { flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-contact',
@@ -12,14 +13,18 @@ import { flyInOut } from '../animations/app.animation';
     'style': 'display: block;'
     },
     animations: [
-      flyInOut()
+      flyInOut(),
+      expand() // for animations in Assignment 4 Task 4
     ]
 })
 export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  submitted: Boolean = false; // if form has been submitted
+  displayed: Boolean = false; // if submission has been displayed back to user
   contactType = ContactType;
+  errMess: String;
   formErrors = {
     'firstname': '',
     'lastname': '',
@@ -48,11 +53,12 @@ export class ContactComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
-  }
+  constructor(private fb: FormBuilder,
+              private feedbackService: FeedbackService, // feedback service for posting form data
+              @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
+    this.createForm();
   }
 
   createForm() {
@@ -89,8 +95,19 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    this.feedback = this.feedbackForm.value;
+    this.submitted = true; // for template to display spinner
+    this.feedback = this.feedbackForm.value; // form will be hidden once feedback is not null
     console.log(this.feedback);
+    this.feedbackService.submitFeedback(this.feedback) // parse the feedback into Feedback Service
+      .subscribe(feedback => {
+        this.feedback = feedback; // subscribe the observable returned from submitFeedback()
+        this.submitted = false; // signal template to hide spinner once returned
+        this.displayed = true; // signal template to display feedback data
+        setTimeout(() => { this.feedback = null }, 5000); // wait 5 seconds and clear feedback object to show form again
+      },
+      errmess => { this.feedback = null; this.errMess = <any>errmess }
+    );
+    this.displayed = false; // hide feedback data from user
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
