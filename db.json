@@ -39,18 +39,6 @@
           "comment": "It's your birthday, we're gonna party!",
           "author": "25 Cent",
           "date": "2011-12-02T17:57:28.556094Z"
-        },
-        {
-          "rating": 5,
-          "comment": "So good...",
-          "author": "Nigel",
-          "date": "2017-12-19T08:15:23.804Z"
-        },
-        {
-          "rating": 5,
-          "comment": "Test Comment",
-          "author": "Test Author",
-          "date": "2017-12-21T12:26:14.966Z"
         }
       ]
     },
@@ -228,28 +216,6 @@
       "abbr": "EC",
       "featured": "true",
       "description": "Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. He says, Put together the cuisines from the two craziest cultures, and you get a winning hit! Amma Mia!"
-    }
-  ],
-  "feedback": [
-    {
-      "firstname": "Test",
-      "lastname": "Test",
-      "telnum": "123",
-      "email": "test@test",
-      "agree": false,
-      "contacttype": "None",
-      "message": "Blah",
-      "id": 0
-    },
-    {
-      "firstname": "Mr",
-      "lastname": "Pootie",
-      "telnum": "123",
-      "email": "f@g",
-      "agree": false,
-      "contacttype": "None",
-      "message": "What?",
-      "id": 1
     }
   ]
 }
