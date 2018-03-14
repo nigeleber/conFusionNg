@@ -10,7 +10,8 @@ fxLayoutGap="10px">
             <div md-card-avatar></div>
             <md-card-title><h3>{{dish.name | uppercase}}</h3></md-card-title>
         </md-card-header>
-        <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
+        <!-- <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}> -->
+        <img md-card-image src="{{dish.image}}" alt={{dish.name}}>
         <md-card-content>
             <p>{{dish.description}}</p>
         </md-card-content>
@@ -29,7 +30,8 @@ fxLayoutGap="10px">
             <div md-card-avatar></div>
             <md-card-title><h3>{{promotion.name | uppercase}}</h3></md-card-title>
         </md-card-header>
-        <img md-card-image src="{{BaseURL + promotion.image}}" alt={{promotion.name}}>
+        <!-- <img md-card-image src="{{BaseURL + promotion.image}}" alt={{promotion.name}}> -->
+        <img md-card-image src="{{promotion.image}}" alt={{promotion.name}}>
         <md-card-content>
             <p>{{promotion.description}}</p>
         </md-card-content>
@@ -50,7 +52,8 @@ fxLayoutGap="10px">
                 <h3>{{leader.name | uppercase}} {{leader.abbr}}</h3>
             </md-card-title>
         </md-card-header>
-        <img md-card-image src="{{BaseURL + leader.image}}" alt={{leader.name}}>
+        <!-- <img md-card-image src="{{BaseURL + leader.image}}" alt={{leader.name}}> -->
+        <img md-card-image src="{{leader.image}}" alt={{leader.name}}>
         <md-card-content>
             <p>{{leader.designation}}</p>
             <p>{{leader.description}}</p>
